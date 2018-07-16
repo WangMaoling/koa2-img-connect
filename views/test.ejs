@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Ajax上传图片</title>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui@2.2.0/lib/theme-chalk/index.css">
+    <script src="http://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/element-ui@2.2.0/lib/index.js"></script>
+    <style>
+        body{
+            /* overflow: hidden; */
+        }
+        * {
+            padding: 0;
+            margin: 0;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        .el-icon-document {
+            display: none;
+        }
+
+        #imgConnect {
+            padding: 50px;
+            display: flex;
+            position: relative;
+            justify-content: space-between;
+        }
+        .left,
+        .right {
+            width: 50%;
+            height: 100%;
+        }
+        .left{
+            padding-right: 10px;
+        }
+        .right{
+            position: fixed;
+            right: 0;
+            padding-right: 50px;
+        }
+        .imgBox{
+            width: 80%;
+        }
+        .shili{
+            box-shadow: 0px 0px 0px 2px #aaa;
+            width: 320px;
+            height: 568px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="imgConnect">
+        <div class="left">
+            
+            <div>
+                <p>请选择添加水印的位置</p>
+                <div>
+                    <span>位置1：左上角</span>
+                    上
+                    <input class="weizhi" type="text" name="weizhi1" value="0.6">% 左
+                    <input class="weizhi" type="text" name="weizhi1" value="0.6">%
+                </div>
+                <div>
+                    <span>位置1：左上角</span>
+                    上
+                    <input class="weizhi" type="text" name="weizhi1" value="0.6">% 左
+                    <input class="weizhi" type="text" name="weizhi1" value="0.6">%
+                </div>
+            </div>
+            <!-- <div class="form-group">
+                <input type="file" name="file" id="file" multiple="multiple"  enctype="multipart/form-data">
+                <p id="result"></p>
+                <img id="img" src="">
+            </div> -->
+            <!-- <span>选择水印</span>
+            <input type="file" placeholder="" name="shuifile" id="shuifile" enctype="multipart/form-data"> -->
+            <el-upload class="imgBox" action='' :auto-upload="false"
+                 :file-list="shuiFileList" list-type="picture" :on-change="handleShuiChange">
+                <el-button size="small" plain type="primary">选择水印</el-button>
+                <div slot="tip" class="el-upload__tip">只能上传1张jpg/png文件</div>
+            </el-upload>
+            
+            <el-upload class="imgBox" multiple action='' :limit="limit" :on-change="handleChange" :on-exceed="handleExceed" :auto-upload="false"
+                :on-remove="handleRemove" :file-list="fileList" list-type="picture">
+                <el-button size="small" type="primary">选择图片</el-button>
+                <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，最大上传{{limit}}，还剩{{limit-fileList.length}}</div>
+            </el-upload>
+        </div>
+        <div class="right">
+            <p>示例：</p>
+            <div class="shili">
+
+            </div>
+            <div>
+                <el-button @click="uploadFile" size="small" type="primary">提交</el-button>
+                <el-button @click="handleClick" size="small" type="primary" plain>立即下载</el-button>
+                <iframe name="myIframe" style="display:none"></iframe>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    var vm = new Vue({
+        el: '#imgConnect',
+        data: function () {
+            return {
+                limit: 20,
+                path: '',
+                fileList: [],
+                shuiFileList:[]
+            }
+        },
+        methods: {
+            handleRemove(file, fileList) {
+                console.log(file, fileList);
+                this.fileList = fileList;
+            },
+            handleChange(file, fileList) {
+                // alert(1)
+                console.log(fileList);
+                this.fileList = fileList;
+            },
+            handleShuiChange(file, fileList) {
+                // alert(1)
+                console.log(fileList);
+                this.shuiFileList = fileList;
+            },
+            handleExceed(file, fileList) {
+                alert('超出限制')
+                console.log(file);
+            },
+            uploadFile: function () {
+                var that = this;
+                var file = this.fileList;
+                var formData = new FormData();
+                for (var i in file) { //这里如果单张上传就不必遍历直接formData.append('file',file.files[0])
+                    // console.log(file.files[i])    
+                    formData.append('file', file[i].raw);
+                }
+                // console.log(this.fileList)
+                // formData.append('weizhi',$('.weizhi').val())
+                // console.log(document.getElementById("shuifile").files)
+                var shuiyin = this.shuiFileList[0].raw;
+                var newfile = new File([shuiyin], 's_y.' + shuiyin.name.split('.').pop());
+                // console.log(newfile)
+                formData.append('file', newfile)
+                $.ajax({
+                    url: '/upload',
+                    type: 'POST',
+                    data: formData,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function (data) {
+                        if (data.code != 200) {
+                            alert('上传错误')
+                        } else {
+                            that.path = data.file[0].destination;
+                            alert('上传成功')
+                        }
+                    },
+                    error: function () {
+
+                    }
+                });
+            },
+            handleClick: function () {
+                var that = this;
+                $.ajax({
+                    url: '/downloadAll',
+                    type: 'POST',
+                    data: {
+                        path: that.path
+                    },
+                    success: function (data) {
+                        if (data.code != 200) {
+                            alert('下载错误')
+                        } else {
+                            var path = 'uploads/' + data.file.split('/').pop();
+                            window.open(path, 'myIframe');
+                        }
+                    },
+                    error: function () {
+
+                    }
+                });
+            }
+        },
+        mounted: function () {
+
+        }
+    })
+</script>
+
+</html>
