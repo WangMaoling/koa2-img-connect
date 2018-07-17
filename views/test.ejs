@@ -11,9 +11,11 @@
     <script src="https://unpkg.com/vue/dist/vue.js"></script>
     <script src="https://unpkg.com/element-ui@2.2.0/lib/index.js"></script>
     <style>
-        body{
+        body {
             /* overflow: hidden; */
+            color: #555555;
         }
+
         * {
             padding: 0;
             margin: 0;
@@ -31,37 +33,162 @@
             position: relative;
             justify-content: space-between;
         }
+
         .left,
         .right {
             width: 50%;
             height: 100%;
         }
-        .left{
+
+        .left {
             padding-right: 10px;
         }
-        .right{
+
+        .right {
             position: fixed;
             right: 0;
             padding-right: 50px;
         }
-        .imgBox{
+
+        .imgBox {
+            padding-left: 20px;
             width: 80%;
         }
-        .shili{
-            box-shadow: 0px 0px 0px 2px #aaa;
-            width: 320px;
-            height: 568px;
+
+        .shili {
+            box-shadow: 0px 0px 0px 1px #aaa;
+            width: 400px;
+            height: 500px;
+            position: relative;
+        }
+
+        .shiliImg {
+            position: absolute;
+            transition: 0.2s;
+            -webkit-transition: 0.2s;
+        }
+
+        .el-input-group {
+            margin-top: 20px;
+            padding-left: 10px;
+        }
+
+        .el-input-group__append,
+        .el-input-group__prepend {
+            padding: 0 10px;
+        }
+
+        .el-tabs--left .el-tabs__item.is-left {
+            text-align: left;
+        }
+
+        .bz {
+            margin-bottom: 20px;
+        }
+
+        .el-tag--danger {
+            margin-bottom: 10px;
         }
     </style>
 </head>
-
 <body>
     <div id="imgConnect">
         <div class="left">
-            
-            <div>
-                <p>请选择添加水印的位置</p>
-                <div>
+            <div class="bz">
+                <el-tag type="danger">步骤一：请选择设置水印在图片中的位置</el-tag>
+                <el-tabs @tab-click="tabClick" tab-position="left" style="height: 300px;width: 80%;">
+                    <el-tab-pane label="左上角">
+                        <div class="el-input el-input-group el-input-group--append el-input-group--prepend">
+                            <div class="el-input-group__prepend">距离左</div>
+                            <input maxlength="5" @keyup="inputChange('shiliLeft',shiliLeft)" onkeyup="value=value.replace(/[^\d\.]/g,'')" v-model="shiliLeft" placeholder="请输入内容" type="text" validateevent="true"
+                                class="el-input__inner">
+                            <div class="el-input-group__append">%</div>
+                        </div>
+                        <div class="el-input el-input-group el-input-group--append el-input-group--prepend">
+                            <div class="el-input-group__prepend">距离上</div>
+                            <input maxlength="5"  @keyup="inputChange('shiliTop',shiliTop)" onkeyup="value=value.replace(/[^\d\.]/g,'')" v-model="shiliTop" placeholder="请输入内容" type="text" validateevent="true"
+                                class="el-input__inner">
+                            <div class="el-input-group__append">%</div>
+                        </div>
+                    </el-tab-pane>
+                    <el-tab-pane label="右上角">
+                        <div class="el-input el-input-group el-input-group--append el-input-group--prepend">
+                            <div class="el-input-group__prepend">距离右</div>
+                            <input maxlength="5" @keyup="inputChange('shiliRight',shiliRight)" onkeyup="value=value.replace(/[^\d\.]/g,'')" v-model="shiliRight" placeholder="请输入内容" type="text" validateevent="true"
+                                class="el-input__inner">
+                            <div class="el-input-group__append">%</div>
+                        </div>
+                        <div class="el-input el-input-group el-input-group--append el-input-group--prepend">
+                            <div class="el-input-group__prepend">距离上</div>
+                            <input maxlength="5" @keyup="inputChange('shiliTop',shiliTop)" onkeyup="value=value.replace(/[^\d\.]/g,'')" v-model="shiliTop" placeholder="请输入内容" type="text" validateevent="true"
+                                class="el-input__inner">
+                            <div class="el-input-group__append">%</div>
+                        </div>
+                    </el-tab-pane>
+                    <el-tab-pane label="左下角">
+                        <div class="el-input el-input-group el-input-group--append el-input-group--prepend">
+                            <div class="el-input-group__prepend">距离左</div>
+                            <input maxlength="5" @keyup="inputChange('shiliLeft',shiliLeft)" onkeyup="value=value.replace(/[^\d\.]/g,'')" v-model="shiliLeft" placeholder="请输入内容" type="text" validateevent="true"
+                                class="el-input__inner">
+                            <div class="el-input-group__append">%</div>
+                        </div>
+                        <div class="el-input el-input-group el-input-group--append el-input-group--prepend">
+                            <div class="el-input-group__prepend">距离下</div>
+                            <input maxlength="5" @keyup="inputChange('shiliBottom',shiliBottom)" onkeyup="value=value.replace(/[^\d\.]/g,'')" v-model="shiliBottom" placeholder="请输入内容" type="text" validateevent="true"
+                                class="el-input__inner">
+                            <div class="el-input-group__append">%</div>
+                        </div>
+                    </el-tab-pane>
+                    <el-tab-pane label="右下角">
+                        <div class="el-input el-input-group el-input-group--append el-input-group--prepend">
+                            <div class="el-input-group__prepend">距离右</div>
+                            <input maxlength="5" @keyup="inputChange('shiliRight',shiliRight)" onkeyup="value=value.replace(/[^\d\.]/g,'')" v-model="shiliRight" placeholder="请输入内容" type="text" validateevent="true"
+                                class="el-input__inner">
+                            <div class="el-input-group__append">%</div>
+                        </div>
+                        <div class="el-input el-input-group el-input-group--append el-input-group--prepend">
+                            <div class="el-input-group__prepend">距离下</div>
+                            <input maxlength="5" @keyup="inputChange('shiliBottom',shiliBottom)" onkeyup="value=value.replace(/[^\d\.]/g,'')" v-model="shiliBottom" placeholder="请输入内容" type="text" validateevent="true"
+                                class="el-input__inner">
+                            <div class="el-input-group__append">%</div>
+                        </div>
+                    </el-tab-pane>
+                    <el-tab-pane label="上下居中">
+                        <div class="el-input el-input-group el-input-group--append el-input-group--prepend">
+                            <div class="el-input-group__prepend">距离左</div>
+                            <input maxlength="5" @keyup="inputChange('shiliLeft',shiliLeft);shiliRight=''" onkeyup="value=value.replace(/[^\d\.]/g,'')" v-model="shiliLeft" placeholder="请输入内容" type="text" validateevent="true"
+                                class="el-input__inner">
+                            <div class="el-input-group__append">%</div>
+                        </div>
+                        <p style="margin: 20px 0 0 11px;text-align: center;">或者</p>
+                        <div class="el-input el-input-group el-input-group--append el-input-group--prepend">
+                            <div class="el-input-group__prepend">距离右</div>
+                            <input maxlength="5" @keyup="inputChange('shiliRight',shiliRight);shiliLeft=''" onkeyup="value=value.replace(/[^\d\.]/g,'')" v-model="shiliRight" placeholder="请输入内容" type="text" validateevent="true"
+                                class="el-input__inner">
+                            <div class="el-input-group__append">%</div>
+                        </div>
+                    </el-tab-pane>
+                    <el-tab-pane label="左右居中">
+                        <div class="el-input el-input-group el-input-group--append el-input-group--prepend">
+                            <div class="el-input-group__prepend">距离上</div>
+                            <input maxlength="5" @keyup="inputChange('shiliTop',shiliTop);shiliBottom=''" onkeyup="value=value.replace(/[^\d\.]/g,'')" v-model="shiliTop" placeholder="请输入内容" type="text" validateevent="true"
+                                class="el-input__inner">
+                            <div class="el-input-group__append">%</div>
+                        </div>
+                        <p style="margin: 20px 0 0 11px;text-align: center;">或者</p>
+                        <div class="el-input el-input-group el-input-group--append el-input-group--prepend">
+                            <div class="el-input-group__prepend">距离下</div>
+                            <input maxlength="5" @keyup="inputChange('shiliBottom',shiliBottom);shiliTop=''" onkeyup="value=value.replace(/[^\d\.]/g,'')" v-model="shiliBottom" placeholder="请输入内容" type="text" validateevent="true"
+                                class="el-input__inner">
+                            <div class="el-input-group__append">%</div>
+                        </div>
+                    </el-tab-pane>
+                    <el-tab-pane label="全部居中">
+                        <div style="height:300px;display:flex;align-items: center;
+                            justify-content:center;">请参考示例</div>
+                    </el-tab-pane>
+                </el-tabs>
+                <!-- <div>
                     <span>位置1：左上角</span>
                     上
                     <input class="weizhi" type="text" name="weizhi1" value="0.6">% 左
@@ -72,7 +199,7 @@
                     上
                     <input class="weizhi" type="text" name="weizhi1" value="0.6">% 左
                     <input class="weizhi" type="text" name="weizhi1" value="0.6">%
-                </div>
+                </div> -->
             </div>
             <!-- <div class="form-group">
                 <input type="file" name="file" id="file" multiple="multiple"  enctype="multipart/form-data">
@@ -81,22 +208,27 @@
             </div> -->
             <!-- <span>选择水印</span>
             <input type="file" placeholder="" name="shuifile" id="shuifile" enctype="multipart/form-data"> -->
-            <el-upload class="imgBox" action='' :auto-upload="false"
-                 :file-list="shuiFileList" list-type="picture" :on-change="handleShuiChange">
-                <el-button size="small" plain type="primary">选择水印</el-button>
-                <div slot="tip" class="el-upload__tip">只能上传1张jpg/png文件</div>
-            </el-upload>
-            
-            <el-upload class="imgBox" multiple action='' :limit="limit" :on-change="handleChange" :on-exceed="handleExceed" :auto-upload="false"
-                :on-remove="handleRemove" :file-list="fileList" list-type="picture">
-                <el-button size="small" type="primary">选择图片</el-button>
-                <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，最大上传{{limit}}，还剩{{limit-fileList.length}}</div>
-            </el-upload>
+            <div class="bz">
+                <el-tag type="danger">步骤二：请选择设置水印</el-tag>
+                <el-upload class="imgBox" action='' :auto-upload="false" :file-list="shuiFileList" list-type="picture" :on-change="handleShuiChange">
+                    <el-button size="small" plain type="primary">选择水印</el-button>
+                    <div slot="tip" class="el-upload__tip">只能上传1张jpg/png文件</div>
+                </el-upload>
+            </div>
+            <div class="bz">
+                <el-tag type="danger">步骤三：选择上传图片</el-tag>
+                <el-upload class="imgBox" multiple action='' :limit="limit" :on-change="handleChange" :on-exceed="handleExceed" :auto-upload="false"
+                    :on-remove="handleRemove" :file-list="fileList" list-type="picture">
+                    <el-button size="small" type="primary">选择图片</el-button>
+                    <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，最大上传{{limit}}，还剩{{limit-fileList.length}}</div>
+                </el-upload>
+            </div>
+
         </div>
         <div class="right">
             <p>示例：</p>
             <div class="shili">
-
+                <img :style="imgStyleObject" style=" filter: sepia(100%);" :width="shiliWidth" :height="shiliHeight" class="shiliImg" src="../images/icon.jpg" alt="">
             </div>
             <div>
                 <el-button @click="uploadFile" size="small" type="primary">提交</el-button>
@@ -111,30 +243,125 @@
         el: '#imgConnect',
         data: function () {
             return {
+                tabIndex:'0',
                 limit: 20,
                 path: '',
                 fileList: [],
-                shuiFileList:[]
+                shuiFileList: [],
+                shiliTop: '',
+                shiliLeft: '',
+                shiliRight: '',
+                shiliBottom: '',
+                shiliWidth: '',
+                shiliHeight: '',
+                imgStyleObject: {
+                    // top: '5%',
+                }
             }
         },
         methods: {
+            tabClick(tab, event) {
+                // console.log(tab, event);
+                var index = Number(tab.index);
+                this.tabIndex = index;
+                // 先取消之前设置过得数据
+                this.shiliTop = '',
+                this.shiliLeft = '',
+                this.shiliRight = '',
+                this.shiliBottom = '',
+                this.imgStyleObject = {};
+                switch(index){
+                    case 0://左上
+                        this.imgStyleObject = {
+                            top:0,
+                            left:0
+                        };
+                        break;
+                    case 1://右上
+                        this.imgStyleObject = {
+                            top:0,
+                            right:0
+                        };
+                        break;
+                    case 2://左下
+                        this.imgStyleObject = {
+                            bottom:0,
+                            left:0
+                        };
+                        break;
+                    case 3://右下
+                        this.imgStyleObject = {
+                            bottom:0,
+                            right:0
+                        };
+                        break;
+                    case 4://上下居中
+                        this.imgStyleObject = {
+                            top:'50%',
+                            transform: 'translateY(-50%)',
+                            left:0
+                        };
+                        break;
+                    case 5://左右居中
+                        this.imgStyleObject = {
+                            left:'50%',
+                            transform: 'translateX(-50%)',
+                            top:0
+                        };
+                        break;
+                    case 6://全部居中
+                        this.imgStyleObject = {
+                            top:'50%',
+                            left: '50%',
+                            transform: "translate(-50%,-50%)"
+                        };
+                        break;
+                    default:;
+
+                }
+            },
+            inputChange(weizhi,value){
+                this[weizhi] = value.replace(/[^\d\.]/g,'');
+                if(this.tabIndex==4){
+                    this.imgStyleObject = {
+                        top:'50%',
+                        transform: 'translateY(-50%)',
+                        left:this.shiliLeft==''?'':this.shiliLeft+'%',
+                        right:this.shiliRight==''?'':this.shiliRight+'%',
+                    };
+                }else if(this.tabIndex==5){
+                    this.imgStyleObject = {
+                        top:this.shiliTop==''?'':this.shiliTop+'%',
+                        bottom:this.shiliBottom==''?'':this.shiliBottom+'%',
+                        left:'50%',
+                        transform: 'translateX(-50%)',
+                    };
+                }else{
+                    this.imgStyleObject = {
+                        top:this.shiliTop==''?'':this.shiliTop+'%',
+                        bottom:this.shiliBottom==''?'':this.shiliBottom+'%',
+                        left:this.shiliLeft==''?'':this.shiliLeft+'%',
+                        right:this.shiliRight==''?'':this.shiliRight+'%',
+                    };
+                }
+            },
             handleRemove(file, fileList) {
-                console.log(file, fileList);
+                // console.log(file, fileList);
                 this.fileList = fileList;
             },
             handleChange(file, fileList) {
                 // alert(1)
-                console.log(fileList);
+                // console.log(fileList);
                 this.fileList = fileList;
             },
             handleShuiChange(file, fileList) {
                 // alert(1)
-                console.log(fileList);
+                // console.log(fileList);
                 this.shuiFileList = fileList;
             },
             handleExceed(file, fileList) {
                 alert('超出限制')
-                console.log(file);
+                // console.log(file);
             },
             uploadFile: function () {
                 var that = this;

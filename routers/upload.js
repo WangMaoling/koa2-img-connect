@@ -69,7 +69,7 @@ function suiyin(pathStr){
             var wmHeight = watermarkImg.height();
             images(sourceImg)
             // 设置绘制的坐标位置，右下角距离 40px  距离左，距离上
-            .draw(watermarkImg, 0, 0)
+            .draw(watermarkImg, 480, 0)
             .save(pathStr+"_1/"+ sourceImgName+'');
         }
     }
