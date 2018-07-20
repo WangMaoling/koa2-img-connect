@@ -1,30 +1,10 @@
 const Koa = require('koa');
 const path = require('path')
 const bodyParser = require('koa-bodyparser');
-const ejs = require('ejs');
-const session = require('koa-session-minimal');
-const MysqlStore = require('koa-mysql-session');
-const config = require('./config/default.js');
-const router = require('koa-router')
 const views = require('koa-views')
 // const koaStatic = require('koa-static')
 const staticCache = require('koa-static-cache')
 const app = new Koa()
-
-
-// session存储配置
-const sessionMysqlConfig= {
-  user: config.database.USERNAME,
-  password: config.database.PASSWORD,
-  database: config.database.DATABASE,
-  host: config.database.HOST,
-}
-
-// 配置session中间件
-app.use(session({
-  key: 'USER_SID',
-  store: new MysqlStore(sessionMysqlConfig)
-}))
 
 
 // 配置静态资源加载中间件
@@ -48,11 +28,7 @@ app.use(bodyParser({
 }))
 
 //  路由
-// app.use(require('./routers/signin.js').routes())
-// app.use(require('./routers/signup.js').routes())
-// app.use(require('./routers/posts.js').routes())
-// app.use(require('./routers/signout.js').routes())
 app.use(require('./routers/upload.js').routes())
-app.listen(config.port)
+app.listen(3000)
 
-console.log(`listening on port ${config.port}`)
+console.log(`listening on port 3000`)

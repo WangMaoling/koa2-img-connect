@@ -28,23 +28,23 @@
         }
 
         #imgConnect {
-            padding: 50px;
+            padding: 10px 50px 0;
             display: flex;
             position: relative;
             justify-content: space-between;
         }
 
-        .left,
-        .right {
+        .conleft,
+        .conright {
             width: 50%;
             height: 100%;
         }
 
-        .left {
+        .conleft {
             padding-right: 10px;
         }
 
-        .right {
+        .conright {
             position: fixed;
             right: 0;
             padding-right: 50px;
@@ -60,6 +60,7 @@
             width: 400px;
             height: 500px;
             position: relative;
+            overflow: hidden;
         }
 
         .shiliImg {
@@ -89,18 +90,25 @@
         .el-tag--danger {
             margin-bottom: 10px;
         }
+        .title{
+            width: 100%;
+            text-align: center;
+            padding:10px;
+        }
     </style>
 </head>
 <body>
+    <p class="title">提示：上传的水印与图片尽量格式一致，否则有可能会处理失败</p>
+
     <div id="imgConnect">
-        <div class="left">
+        <div class="conleft">
             <div class="bz">
                 <el-tag type="danger">步骤一：请选择设置水印在图片中的位置</el-tag>
                 <el-tabs @tab-click="tabClick" tab-position="left" style="height: 300px;width: 80%;">
                     <el-tab-pane label="左上角">
                         <div class="el-input el-input-group el-input-group--append el-input-group--prepend">
                             <div class="el-input-group__prepend">距离左</div>
-                            <input maxlength="5" @keyup="inputChange('shiliLeft',shiliLeft)" onkeyup="value=value.replace(/[^\d\.]/g,'')" v-model="shiliLeft" placeholder="请输入内容" type="text" validateevent="true"
+                            <input maxlength="5" @keyup="inputChange('shiliLeft',shiliLeft)" onkeyup="value=value.replace(/[^\d\.]/g,'');" v-model="shiliLeft" placeholder="请输入内容" type="text" validateevent="true"
                                 class="el-input__inner">
                             <div class="el-input-group__append">%</div>
                         </div>
@@ -188,26 +196,7 @@
                             justify-content:center;">请参考示例</div>
                     </el-tab-pane>
                 </el-tabs>
-                <!-- <div>
-                    <span>位置1：左上角</span>
-                    上
-                    <input class="weizhi" type="text" name="weizhi1" value="0.6">% 左
-                    <input class="weizhi" type="text" name="weizhi1" value="0.6">%
-                </div>
-                <div>
-                    <span>位置1：左上角</span>
-                    上
-                    <input class="weizhi" type="text" name="weizhi1" value="0.6">% 左
-                    <input class="weizhi" type="text" name="weizhi1" value="0.6">%
-                </div> -->
             </div>
-            <!-- <div class="form-group">
-                <input type="file" name="file" id="file" multiple="multiple"  enctype="multipart/form-data">
-                <p id="result"></p>
-                <img id="img" src="">
-            </div> -->
-            <!-- <span>选择水印</span>
-            <input type="file" placeholder="" name="shuifile" id="shuifile" enctype="multipart/form-data"> -->
             <div class="bz">
                 <el-tag type="danger">步骤二：请选择设置水印</el-tag>
                 <el-upload class="imgBox" action='' :auto-upload="false" :file-list="shuiFileList" list-type="picture" :on-change="handleShuiChange">
@@ -225,7 +214,7 @@
             </div>
 
         </div>
-        <div class="right">
+        <div class="conright">
             <p>示例：</p>
             <div class="shili">
                 <img :style="imgStyleObject" style=" filter: sepia(100%);" :width="shiliWidth" :height="shiliHeight" class="shiliImg" src="../images/icon.jpg" alt="">
@@ -322,6 +311,18 @@
             },
             inputChange(weizhi,value){
                 this[weizhi] = value.replace(/[^\d\.]/g,'');
+                if(value.replace(/[^\d\.]/g,'')>100){
+                    this.$notify.error({
+                        title: '错误',
+                        message: '距离超过了100%',
+                        duration: 2000
+                    });
+                    // 距离超出直接清空
+                    // this[weizhi] = String(this[weizhi]).substring(0,String(this[weizhi]).length-1);
+                    this[weizhi] = '';
+                    // alert(this[weizhi])
+                    // return;
+                }
                 if(this.tabIndex==4){
                     this.imgStyleObject = {
                         top:'50%',
@@ -367,6 +368,13 @@
                 var that = this;
                 var file = this.fileList;
                 var formData = new FormData();
+                if(file==''||!this.shuiFileList[0]){
+                    alert('请先上传图片以及水印');
+                    return;
+                }
+                var shuiyin = this.shuiFileList[0].raw;
+                var newfile = new File([shuiyin], 's_y.' + shuiyin.name.split('.').pop());
+                formData.append('file', newfile)
                 for (var i in file) { //这里如果单张上传就不必遍历直接formData.append('file',file.files[0])
                     // console.log(file.files[i])    
                     formData.append('file', file[i].raw);
@@ -374,10 +382,8 @@
                 // console.log(this.fileList)
                 // formData.append('weizhi',$('.weizhi').val())
                 // console.log(document.getElementById("shuifile").files)
-                var shuiyin = this.shuiFileList[0].raw;
-                var newfile = new File([shuiyin], 's_y.' + shuiyin.name.split('.').pop());
+               
                 // console.log(newfile)
-                formData.append('file', newfile)
                 $.ajax({
                     url: '/upload',
                     type: 'POST',
