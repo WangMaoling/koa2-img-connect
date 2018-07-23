@@ -98,7 +98,7 @@
     </style>
 </head>
 <body>
-    <p class="title">提示：上传的水印与图片尽量格式一致，否则有可能会处理失败</p>
+    <p class="title">提示：上传的水印与图片尽量格式一致，否则有可能会处理失败，水印位置不能超出图片</p>
 
     <div id="imgConnect">
         <div class="conleft">
@@ -108,13 +108,13 @@
                     <el-tab-pane label="左上角">
                         <div class="el-input el-input-group el-input-group--append el-input-group--prepend">
                             <div class="el-input-group__prepend">距离左</div>
-                            <input maxlength="5" @keyup="inputChange('shiliLeft',shiliLeft)" onkeyup="value=value.replace(/[^\d\.]/g,'');" v-model="shiliLeft" placeholder="请输入内容" type="text" validateevent="true"
+                            <input maxlength="5" @keyup="inputChange('shiliLeft',shiliLeft,$event)" onkeyup="value=value.replace(/[^\d\.]/g,'');" v-model="shiliLeft" placeholder="请输入内容" type="text" validateevent="true"
                                 class="el-input__inner">
                             <div class="el-input-group__append">%</div>
                         </div>
                         <div class="el-input el-input-group el-input-group--append el-input-group--prepend">
                             <div class="el-input-group__prepend">距离上</div>
-                            <input maxlength="5"  @keyup="inputChange('shiliTop',shiliTop)" onkeyup="value=value.replace(/[^\d\.]/g,'')" v-model="shiliTop" placeholder="请输入内容" type="text" validateevent="true"
+                            <input maxlength="5"  @keyup="inputChange('shiliTop',shiliTop,$event)" onkeyup="value=value.replace(/[^\d\.]/g,'')" v-model="shiliTop" placeholder="请输入内容" type="text" validateevent="true"
                                 class="el-input__inner">
                             <div class="el-input-group__append">%</div>
                         </div>
@@ -122,13 +122,13 @@
                     <el-tab-pane label="右上角">
                         <div class="el-input el-input-group el-input-group--append el-input-group--prepend">
                             <div class="el-input-group__prepend">距离右</div>
-                            <input maxlength="5" @keyup="inputChange('shiliRight',shiliRight)" onkeyup="value=value.replace(/[^\d\.]/g,'')" v-model="shiliRight" placeholder="请输入内容" type="text" validateevent="true"
+                            <input maxlength="5" @keyup="inputChange('shiliRight',shiliRight,$event)" onkeyup="value=value.replace(/[^\d\.]/g,'')" v-model="shiliRight" placeholder="请输入内容" type="text" validateevent="true"
                                 class="el-input__inner">
                             <div class="el-input-group__append">%</div>
                         </div>
                         <div class="el-input el-input-group el-input-group--append el-input-group--prepend">
                             <div class="el-input-group__prepend">距离上</div>
-                            <input maxlength="5" @keyup="inputChange('shiliTop',shiliTop)" onkeyup="value=value.replace(/[^\d\.]/g,'')" v-model="shiliTop" placeholder="请输入内容" type="text" validateevent="true"
+                            <input maxlength="5" @keyup="inputChange('shiliTop',shiliTop,$event)" onkeyup="value=value.replace(/[^\d\.]/g,'')" v-model="shiliTop" placeholder="请输入内容" type="text" validateevent="true"
                                 class="el-input__inner">
                             <div class="el-input-group__append">%</div>
                         </div>
@@ -136,13 +136,13 @@
                     <el-tab-pane label="左下角">
                         <div class="el-input el-input-group el-input-group--append el-input-group--prepend">
                             <div class="el-input-group__prepend">距离左</div>
-                            <input maxlength="5" @keyup="inputChange('shiliLeft',shiliLeft)" onkeyup="value=value.replace(/[^\d\.]/g,'')" v-model="shiliLeft" placeholder="请输入内容" type="text" validateevent="true"
+                            <input maxlength="5" @keyup="inputChange('shiliLeft',shiliLeft,$event)" onkeyup="value=value.replace(/[^\d\.]/g,'')" v-model="shiliLeft" placeholder="请输入内容" type="text" validateevent="true"
                                 class="el-input__inner">
                             <div class="el-input-group__append">%</div>
                         </div>
                         <div class="el-input el-input-group el-input-group--append el-input-group--prepend">
                             <div class="el-input-group__prepend">距离下</div>
-                            <input maxlength="5" @keyup="inputChange('shiliBottom',shiliBottom)" onkeyup="value=value.replace(/[^\d\.]/g,'')" v-model="shiliBottom" placeholder="请输入内容" type="text" validateevent="true"
+                            <input maxlength="5" @keyup="inputChange('shiliBottom',shiliBottom,$event)" onkeyup="value=value.replace(/[^\d\.]/g,'')" v-model="shiliBottom" placeholder="请输入内容" type="text" validateevent="true"
                                 class="el-input__inner">
                             <div class="el-input-group__append">%</div>
                         </div>
@@ -150,13 +150,13 @@
                     <el-tab-pane label="右下角">
                         <div class="el-input el-input-group el-input-group--append el-input-group--prepend">
                             <div class="el-input-group__prepend">距离右</div>
-                            <input maxlength="5" @keyup="inputChange('shiliRight',shiliRight)" onkeyup="value=value.replace(/[^\d\.]/g,'')" v-model="shiliRight" placeholder="请输入内容" type="text" validateevent="true"
+                            <input maxlength="5" @keyup="inputChange('shiliRight',shiliRight,$event)" onkeyup="value=value.replace(/[^\d\.]/g,'')" v-model="shiliRight" placeholder="请输入内容" type="text" validateevent="true"
                                 class="el-input__inner">
                             <div class="el-input-group__append">%</div>
                         </div>
                         <div class="el-input el-input-group el-input-group--append el-input-group--prepend">
                             <div class="el-input-group__prepend">距离下</div>
-                            <input maxlength="5" @keyup="inputChange('shiliBottom',shiliBottom)" onkeyup="value=value.replace(/[^\d\.]/g,'')" v-model="shiliBottom" placeholder="请输入内容" type="text" validateevent="true"
+                            <input maxlength="5" @keyup="inputChange('shiliBottom',shiliBottom,$event)" onkeyup="value=value.replace(/[^\d\.]/g,'')" v-model="shiliBottom" placeholder="请输入内容" type="text" validateevent="true"
                                 class="el-input__inner">
                             <div class="el-input-group__append">%</div>
                         </div>
@@ -164,14 +164,14 @@
                     <el-tab-pane label="上下居中">
                         <div class="el-input el-input-group el-input-group--append el-input-group--prepend">
                             <div class="el-input-group__prepend">距离左</div>
-                            <input maxlength="5" @keyup="inputChange('shiliLeft',shiliLeft);shiliRight=''" onkeyup="value=value.replace(/[^\d\.]/g,'')" v-model="shiliLeft" placeholder="请输入内容" type="text" validateevent="true"
+                            <input maxlength="5" @keyup="shiliRight='';inputChange('shiliLeft',shiliLeft,$event)" onkeyup="value=value.replace(/[^\d\.]/g,'')" v-model="shiliLeft" placeholder="请输入内容" type="text" validateevent="true"
                                 class="el-input__inner">
                             <div class="el-input-group__append">%</div>
                         </div>
                         <p style="margin: 20px 0 0 11px;text-align: center;">或者</p>
                         <div class="el-input el-input-group el-input-group--append el-input-group--prepend">
                             <div class="el-input-group__prepend">距离右</div>
-                            <input maxlength="5" @keyup="inputChange('shiliRight',shiliRight);shiliLeft=''" onkeyup="value=value.replace(/[^\d\.]/g,'')" v-model="shiliRight" placeholder="请输入内容" type="text" validateevent="true"
+                            <input maxlength="5" @keyup="shiliLeft='';inputChange('shiliRight',shiliRight,$event)" onkeyup="value=value.replace(/[^\d\.]/g,'')" v-model="shiliRight" placeholder="请输入内容" type="text" validateevent="true"
                                 class="el-input__inner">
                             <div class="el-input-group__append">%</div>
                         </div>
@@ -179,14 +179,14 @@
                     <el-tab-pane label="左右居中">
                         <div class="el-input el-input-group el-input-group--append el-input-group--prepend">
                             <div class="el-input-group__prepend">距离上</div>
-                            <input maxlength="5" @keyup="inputChange('shiliTop',shiliTop);shiliBottom=''" onkeyup="value=value.replace(/[^\d\.]/g,'')" v-model="shiliTop" placeholder="请输入内容" type="text" validateevent="true"
+                            <input maxlength="5" @keyup="shiliBottom='';inputChange('shiliTop',shiliTop,$event)" onkeyup="value=value.replace(/[^\d\.]/g,'')" v-model="shiliTop" placeholder="请输入内容" type="text" validateevent="true"
                                 class="el-input__inner">
                             <div class="el-input-group__append">%</div>
                         </div>
                         <p style="margin: 20px 0 0 11px;text-align: center;">或者</p>
                         <div class="el-input el-input-group el-input-group--append el-input-group--prepend">
                             <div class="el-input-group__prepend">距离下</div>
-                            <input maxlength="5" @keyup="inputChange('shiliBottom',shiliBottom);shiliTop=''" onkeyup="value=value.replace(/[^\d\.]/g,'')" v-model="shiliBottom" placeholder="请输入内容" type="text" validateevent="true"
+                            <input maxlength="5" @keyup="shiliTop='';inputChange('shiliBottom',shiliBottom,$event)" onkeyup="value=value.replace(/[^\d\.]/g,'')" v-model="shiliBottom" placeholder="请输入内容" type="text" validateevent="true"
                                 class="el-input__inner">
                             <div class="el-input-group__append">%</div>
                         </div>
@@ -215,11 +215,11 @@
 
         </div>
         <div class="conright">
-            <p>示例：</p>
+            <!-- <p>示例：</p> -->
             <div class="shili">
                 <img :style="imgStyleObject" style=" filter: sepia(100%);" :width="shiliWidth" :height="shiliHeight" class="shiliImg" src="../images/icon.jpg" alt="">
             </div>
-            <div>
+            <div style="margin-top:10px">
                 <el-button @click="uploadFile" size="small" type="primary">提交</el-button>
                 <el-button @click="handleClick" size="small" type="primary" plain>立即下载</el-button>
                 <iframe name="myIframe" style="display:none"></iframe>
@@ -237,14 +237,14 @@
                 path: '',
                 fileList: [],
                 shuiFileList: [],
-                shiliTop: '',
-                shiliLeft: '',
+                shiliTop: '0',
+                shiliLeft: '0',
                 shiliRight: '',
                 shiliBottom: '',
                 shiliWidth: '',
                 shiliHeight: '',
                 imgStyleObject: {
-                    // top: '5%',
+                    tabIndex:'0',
                 }
             }
         },
@@ -254,37 +254,46 @@
                 var index = Number(tab.index);
                 this.tabIndex = index;
                 // 先取消之前设置过得数据
-                this.shiliTop = '',
-                this.shiliLeft = '',
-                this.shiliRight = '',
-                this.shiliBottom = '',
+                this.shiliTop = '';
+                this.shiliLeft = '';
+                this.shiliRight = '';
+                this.shiliBottom = '';
                 this.imgStyleObject = {};
                 switch(index){
                     case 0://左上
+                        this.shiliTop = '0';
+                        this.shiliLeft = '0';
                         this.imgStyleObject = {
                             top:0,
                             left:0
                         };
                         break;
                     case 1://右上
+                        this.shiliTop = '0';
+                        this.shiliRight = '0';
                         this.imgStyleObject = {
                             top:0,
                             right:0
                         };
                         break;
                     case 2://左下
+                        this.shiliLeft = '0';
+                        this.shiliBottom = '0';
                         this.imgStyleObject = {
                             bottom:0,
                             left:0
                         };
                         break;
                     case 3://右下
+                        this.shiliRight = '0';
+                        this.shiliBottom = '0';
                         this.imgStyleObject = {
                             bottom:0,
                             right:0
                         };
                         break;
                     case 4://上下居中
+                        this.shiliLeft = '0';
                         this.imgStyleObject = {
                             top:'50%',
                             transform: 'translateY(-50%)',
@@ -292,6 +301,7 @@
                         };
                         break;
                     case 5://左右居中
+                        this.shiliTop = '0';
                         this.imgStyleObject = {
                             left:'50%',
                             transform: 'translateX(-50%)',
@@ -306,45 +316,55 @@
                         };
                         break;
                     default:;
-
                 }
+                this.imgStyleObject['tabIndex'] = this.tabIndex;
             },
-            inputChange(weizhi,value){
-                this[weizhi] = value.replace(/[^\d\.]/g,'');
+            inputChange(weizhi,value,val){
+                this[weizhi] = value.replace(/[^\d\.]/g,'')==''?'0':value.replace(/[^\d\.]/g,'');
+                // this[weizhi] = value.replace(/[^\d\.]/g,'');
+                // console.log(val)
+                if(val.key=='.'){
+                    if(this[weizhi].split('.').length>=3){
+                        this[weizhi] = 0;
+                    }
+                }
                 if(value.replace(/[^\d\.]/g,'')>100){
                     this.$notify.error({
                         title: '错误',
                         message: '距离超过了100%',
                         duration: 2000
                     });
-                    // 距离超出直接清空
-                    // this[weizhi] = String(this[weizhi]).substring(0,String(this[weizhi]).length-1);
-                    this[weizhi] = '';
-                    // alert(this[weizhi])
-                    // return;
+                    this[weizhi] = '0';
                 }
                 if(this.tabIndex==4){
+                    // console.log(this.shiliLeft)
                     this.imgStyleObject = {
+                        tabIndex:'4',
                         top:'50%',
                         transform: 'translateY(-50%)',
                         left:this.shiliLeft==''?'':this.shiliLeft+'%',
                         right:this.shiliRight==''?'':this.shiliRight+'%',
                     };
+                    // console.log(this.imgStyleObject)
                 }else if(this.tabIndex==5){
                     this.imgStyleObject = {
+                        tabIndex:'5',
                         top:this.shiliTop==''?'':this.shiliTop+'%',
                         bottom:this.shiliBottom==''?'':this.shiliBottom+'%',
                         left:'50%',
                         transform: 'translateX(-50%)',
                     };
                 }else{
+                    // console.log(this.shiliBottom)
                     this.imgStyleObject = {
+                        tabIndex:this.tabIndex,
                         top:this.shiliTop==''?'':this.shiliTop+'%',
                         bottom:this.shiliBottom==''?'':this.shiliBottom+'%',
                         left:this.shiliLeft==''?'':this.shiliLeft+'%',
                         right:this.shiliRight==''?'':this.shiliRight+'%',
                     };
                 }
+                // console.log(this.imgStyleObject)
             },
             handleRemove(file, fileList) {
                 // console.log(file, fileList);
@@ -379,11 +399,7 @@
                     // console.log(file.files[i])    
                     formData.append('file', file[i].raw);
                 }
-                // console.log(this.fileList)
-                // formData.append('weizhi',$('.weizhi').val())
-                // console.log(document.getElementById("shuifile").files)
-               
-                // console.log(newfile)
+                formData.append('weizhi',JSON.stringify(this.imgStyleObject))
                 $.ajax({
                     url: '/upload',
                     type: 'POST',
