@@ -14,4 +14,7 @@ $ npm run dev(运行项目，此运次方法可以实时运行更新后台代码
 或者
 $ node index.js
 
+![image](https://github.com/WangMaoling/koa2-img-connect/blob/master/public/images/WX20180723-171952%402x.png)
+
+![image](https://github.com/WangMaoling/koa2-img-connect/blob/master/public/images/2.jpeg)
 
